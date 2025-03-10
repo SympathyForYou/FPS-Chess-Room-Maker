@@ -50,7 +50,7 @@ def main() -> None:
         logging.info(f"Typed room name: {normal_room}")
 
     # Opens text box clears and types Description
-    clear_and_tye("Description Text Box", 14, description)
+    clear_and_type("Description Text Box", 14, description)
     logging.info(f"Typed description: {description}")
     # Creates a room
     move_and_click(button_positions["Create Room Button"])
