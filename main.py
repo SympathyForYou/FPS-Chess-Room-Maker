@@ -1,7 +1,7 @@
-from functions import move_and_click, clear_and_type, parse_arguments  # Explicit imports
+from functions import move_and_click, clear_and_type, parse_arguments, measure_time  # Explicit imports
+from config import BUTTON_POSITIONS  # Config
 import logging  # Used to log print messages
 import time  # Used to make the program wait
-from config import BUTTON_POSITIONS  # Config
 
 # Top Variables
 SHAKESPEARE_POEM: str = '''O, fairest of days, how dost thou shine so bright? ... (truncated for brevity)'''  # An o'l good poem
@@ -11,6 +11,7 @@ NORMAL_ROOM_NAME: str = "aim-bot"  # Room name for normal game
 
 
 # The main flow of the program is here
+@measure_time
 def create_lobby(shiny_mode: bool) -> None:
     """
     Creates a game lobby based on the shiny_mode flag.
@@ -79,6 +80,7 @@ def main() -> None:
         shiny_mode = get_shiny_mode_from_input()
 
     create_lobby(shiny_mode)
+
 # Main call
 if __name__ == "__main__":
     main()

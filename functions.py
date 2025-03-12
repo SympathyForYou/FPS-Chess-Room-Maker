@@ -1,5 +1,7 @@
-from typing import Tuple  # Used to create a tuple type hint
+import time
+
 from config import BUTTON_POSITIONS # Used to connect dictionary to function
+from typing import Tuple, Callable, Any, Dict  # Used to create a tuple type hint
 import pyautogui  # Used to move the cursor
 import argparse  # Used to add --yes / --no argument for game-mode selection
 
@@ -39,3 +41,17 @@ def parse_arguments() -> argparse.Namespace:
     parser.add_argument('-y', '--yes', action='store_true', help="Automatically set Shiny Chess to yes")
     parser.add_argument('-n', '--no', action='store_true', help="Automatically set Shiny Chess to no")
     return parser.parse_args()
+
+
+def measure_time(func) -> Callable[[tuple[Any, ...], dict[str, Any]], None]:
+    """
+    Decorator to measure a function's execution time.
+
+    :param func: Function to measure.
+    """
+    def wrapper(*args, **kwargs) -> None:
+        start = time.time()
+        func(*args, **kwargs)
+        end = time.time()
+        print(f"Time it took to execute {str(func).split(' ')[1]}: {(end - start):.2f} seconds")
+    return wrapper
