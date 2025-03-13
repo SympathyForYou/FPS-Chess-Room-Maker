@@ -69,13 +69,11 @@ This macro automates the process of creating rooms in FPS Chess. It navigates th
 
 ## Changing Coordinates
 
-1. Run [/test/coordinates](test/coordinates.py) to see your mouse coordinates in the console.
+1. Run [/test/coordinates](test/test_coordinates.py) to see your mouse coordinates in the console.
 
 2. Note down the desired coordinates.
 
 3. Update these coordinates in the [config file](config.py).
-
-
 
 ## Contributing
 
