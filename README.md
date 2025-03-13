@@ -13,6 +13,8 @@ A Python macro to automate room creation in FPS Chess.
 - [Usage](#usage)
 - [Options](#options)
 - [Troubleshooting](#troubleshooting)
+- [How to Change Coordinates](#how-to-change-coordinates)
+- [How to Change Description & Room Name](#how-to-change-description-room-name)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -67,13 +69,19 @@ This macro automates the process of creating rooms in FPS Chess. It navigates th
 - Check that your screen resolution matches the script's expectations. (1920 x 1080)
 - If clicks are misaligned, you may need to adjust coordinates in the script.
 
-## Changing Coordinates
+## How to Change Coordinates
 
 1. Run [/test/coordinates](test/test_coordinates.py) to see your mouse coordinates in the console.
 
 2. Note down the desired coordinates.
 
 3. Update these coordinates in the [config file](config.py).
+
+## How to Change Description & Room Name
+
+1. Open [config.py](config.py) found in the root directory using an IDE or text editor.
+2. Make changes.
+3. Save Changes.
 
 ## Contributing
 
