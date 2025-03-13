@@ -1,5 +1,12 @@
 import logging
 
+# ROOM_CONFIG
+DESCRIPTION: str = "Bafoon"  # The room description
+SHINY_ROOM_NAME: str = "Shiny Pokemon!"  # Room name for shiny game
+NORMAL_ROOM_NAME: str = "aim-bot"  # Room name for normal game
+SHAKESPEARE_POEM: str = '''O, fairest of days, how dost thou shine so bright? ... (truncated for brevity)'''  # An o'l good poem
+
+
 # Coordinates of interest
 BUTTON_POSITIONS = {
     "host_button": (1185, 812),
@@ -9,6 +16,7 @@ BUTTON_POSITIONS = {
     "create_room_button": (715, 782),
     "close_invite_button": (1509, 855)
 }
+
 
 # Basic Config Setup
 logging.basicConfig(

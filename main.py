@@ -1,13 +1,7 @@
 from functions import move_and_click, clear_and_type, parse_arguments, measure_time  # Explicit imports
-from config import BUTTON_POSITIONS  # Config
+from config import BUTTON_POSITIONS, DESCRIPTION, NORMAL_ROOM_NAME, SHINY_ROOM_NAME # Config
 import logging  # Used to log print messages
 import time  # Used to make the program wait
-
-# Top Variables
-SHAKESPEARE_POEM: str = '''O, fairest of days, how dost thou shine so bright? ... (truncated for brevity)'''  # An o'l good poem
-DESCRIPTION: str = "Bafoon"  # The room description
-SHINY_ROOM_NAME: str = "Shiny Pokemon!"  # Room name for shiny game
-NORMAL_ROOM_NAME: str = "aim-bot"  # Room name for normal game
 
 
 # The main flow of the program is here
