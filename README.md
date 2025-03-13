@@ -14,7 +14,7 @@ A Python macro to automate room creation in FPS Chess.
 - [Options](#options)
 - [Troubleshooting](#troubleshooting)
 - [How to Change Coordinates](#how-to-change-coordinates)
-- [How to Change Description & Room Name](#how-to-change-description-room-name)
+- [How to Change Description & Room Name](#how-to-change-description--room-name)
 - [Contributing](#contributing)
 - [License](#license)
 
