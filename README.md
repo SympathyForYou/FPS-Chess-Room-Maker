@@ -70,7 +70,7 @@ This script expects a resolution of 1920 by 1080.
 
 ## How to Change Description & Room Name
 
-1. Open [config.py](config.py) found in the root directory using an IDE or text editor.
+1. Open [config.py](main/config.py) found in the root directory using an IDE or text editor.
 2. Make changes.
 3. Save Changes.
 
