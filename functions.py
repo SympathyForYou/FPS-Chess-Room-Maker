@@ -1,32 +1,62 @@
-import time
-
 from config import BUTTON_POSITIONS # Used to connect dictionary to function
 from typing import Tuple, Callable, Any, Dict  # Used to create a tuple type hint
 import pyautogui  # Used to move the cursor
 import argparse  # Used to add --yes / --no argument for game-mode selection
+import time
 
-
-def move_and_click(position: Tuple[int, int]) -> None:
+def is_on_screen(image, confidence) -> bool | None:
     """
-    Moves the mouse to the specified coordinates and clicks.
+    It takes a screenshot of the entire screen each couple moments and tries to find the given image
+    :param image: The path of the image you want to find
+    :param confidence: How much you want your image on screen to resemble your own image to be considered a match (0.1 - 1)
+    :return: True or False
+    """
 
-    :param position: (x, y) coordinates on the screen.
+    try:  # Tries to find the image if it can't, it throws an error
+        if pyautogui.locateOnScreen(image, confidence=confidence) is not None:
+            return True
+    except pyautogui.ImageNotFoundException:
+        return False  # Returns false (It didn't find)
+
+
+def find_on_screen(image, confidence=0.7) ->  None:
+    """
+    Based on is_on_screen() function. It loops until it finds the desired image
+    :param image: "The path of the image you want to find"
+    :param confidence: "How much you want your image on screen to resemble your own image to be considered a match (0.1 - 1)"
     :return: None
     """
-    pyautogui.moveTo(position)
-    pyautogui.click()
+    while True:
+        time.sleep(1)
+        if not is_on_screen(image, confidence):
+            pass
+        else:
+            break
 
 
-def clear_and_type(key: str, count: int, name: str) -> None:
+def find_and_click(image, confidence=0.7, times=1) -> None:
+    while True:
+        try:
+            x, y = pyautogui.locateCenterOnScreen(image, confidence=confidence)
+            for i in range(times):
+                pyautogui.moveTo(x, y)
+                pyautogui.click()
+            break
+        except pyautogui.ImageNotFoundException:
+            pass
+
+
+def clear_and_type(name) -> None:
     """
       Clears a text box and types new text.
 
-      :param key: Text box key from BUTTON_POSITIONS.
-      :param count: Number of backspace presses.
       :param name: Text to type.
+      :return: None
       """
-    move_and_click(BUTTON_POSITIONS[key])
-    pyautogui.press('backspace', presses=count)
+    pyautogui.keyDown('ctrl')
+    pyautogui.press('a')
+    pyautogui.keyUp('ctrl')
+    pyautogui.press('backspace')
     pyautogui.typewrite(name)
 
 
