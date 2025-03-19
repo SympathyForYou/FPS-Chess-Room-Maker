@@ -1,7 +1,8 @@
-from functions import move_and_click, clear_and_type, parse_arguments, measure_time  # Explicit imports
-from config import BUTTON_POSITIONS, DESCRIPTION, NORMAL_ROOM_NAME, SHINY_ROOM_NAME # Config
+import pyautogui
+
+from functions import is_on_screen, find_and_click, clear_and_type, parse_arguments, measure_time  # Explicit imports
+from config import IMAGE_PATHS, DESCRIPTION, NORMAL_ROOM_NAME, SHINY_ROOM_NAME # Config
 import logging  # Used to log print messages
-import time  # Used to make the program wait
 
 
 # The main flow of the program is here
@@ -13,38 +14,46 @@ def create_lobby(shiny_mode: bool) -> None:
     :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
+    # Find main menu
+    while True:
+        if is_on_screen(IMAGE_PATHS['main'], 0.5):
+            break
+        elif is_on_screen(IMAGE_PATHS['left'], 0.7):
+            logging.info("Player left")
+            pyautogui.hotkey('esc')
+            find_and_click(IMAGE_PATHS['menu'], confidence=0.7, times=2)
+            create_lobby(shiny_mode)
+
     # Click on the Host Button (Three times to un-focus from konsole)
-    for _ in range(3):
-        move_and_click(BUTTON_POSITIONS["host_button"])
-    logging.info("Clicked Host Button to create a lobby")
-    time.sleep(3.4)
+    find_and_click(IMAGE_PATHS['host'])
+    logging.info("Clicked Host Button")
 
 
     # Set room name based on game-mode
     room_name = SHINY_ROOM_NAME if shiny_mode else NORMAL_ROOM_NAME
-    clear_and_type("room_name_text_box", 18, room_name)
+    find_and_click(IMAGE_PATHS['room_name'])
+    clear_and_type(room_name)
     logging.info(f"Set room name to: {room_name}")
 
 
     # Set description
-    move_and_click(BUTTON_POSITIONS["description_text_box"])
-    clear_and_type("description_text_box", 14, DESCRIPTION)
-    logging.info(f"Typed description: {DESCRIPTION}")
+    find_and_click(IMAGE_PATHS['description'])
+    clear_and_type(DESCRIPTION)
+    logging.info(f"Set description to: {DESCRIPTION}")
 
     # Set game-mode
     if shiny_mode:
-        move_and_click(BUTTON_POSITIONS["shiny_pieces_button"])
+        find_and_click(IMAGE_PATHS['shiny'], confidence=0.95)
         logging.info("Activated Shiny Game Mode")
 
     # Creates a room
-    move_and_click(BUTTON_POSITIONS["create_room_button"])
+    find_and_click(IMAGE_PATHS['create_room'])
     logging.info("Lobby Launched")
 
-    # Close Invites
-    time.sleep(1.9)
-    move_and_click(BUTTON_POSITIONS["close_invite_button"])
+    # Close invites
+    logging.info("Invites Found")
+    find_and_click(IMAGE_PATHS['close'])
     logging.info("Closed invites window")
-
 
 def get_shiny_mode_from_input() -> bool:
     """
@@ -73,8 +82,10 @@ def main() -> None:
     else:
         shiny_mode = get_shiny_mode_from_input()
 
-    create_lobby(shiny_mode)
+    logging.info("Macro ON")
+    while True:
+        create_lobby(shiny_mode)
 
 # Main call
-if __name__ == "__main__":
+if __name__ == '__main__':
     main()

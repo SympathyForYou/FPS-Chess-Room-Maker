@@ -13,22 +13,22 @@ A Python macro to automate room creation in FPS Chess.
 - [Usage](#usage)
 - [Options](#options)
 - [Troubleshooting](#troubleshooting)
-- [How to Change Coordinates](#how-to-change-coordinates)
 - [How to Change Description & Room Name](#how-to-change-description--room-name)
 - [Contributing](#contributing)
 - [License](#license)
 
 ## Overview
 
-This macro automates the process of creating rooms in FPS Chess. It navigates through the menu, sets up a room with custom name and description, and can optionally activate shiny mode. This script was made for 1920 by 1080.
+This macro automates the process of creating rooms in FPS Chess. It navigates through the menu,
+sets up a room with a custom name and description, and can optionally activate shiny game-mode.
+This script expects a resolution of 1920 by 1080.
 
 ## Features
 
 - Automatic room creation
 - Custom room name and description
 - Optional shiny mode activation
-- Automatic room launch
-- Closes invite tab after room creation
+- Automatic leave after enemy player leaves
 
 ## Requirements
 
@@ -67,15 +67,6 @@ This macro automates the process of creating rooms in FPS Chess. It navigates th
 
 - Ensure your game window is visible and not minimized.
 - Check that your screen resolution matches the script's expectations. (1920 x 1080)
-- If clicks are misaligned, you may need to adjust coordinates in the script.
-
-## How to Change Coordinates
-
-1. Run [/test/coordinates](test/test_coordinates.py) to see your mouse coordinates in the console.
-
-2. Note down the desired coordinates.
-
-3. Update these coordinates in the [config file](config.py).
 
 ## How to Change Description & Room Name
 
