@@ -1,10 +1,9 @@
-from typing import Tuple, Callable, Any, Dict  # Used to create a tuple type hint
 import pyautogui  # Used to move the cursor
 import argparse  # Used to add --yes / --no argument for game-mode selection
-import time
+import time  # Makes the program wait
 
 
-def is_on_screen(image, confidence=0.6) -> bool | None:
+def is_on_screen(image: str, confidence: float=0.6) -> bool | None:
     """
     It takes a screenshot of the entire screen each couple moments and tries to find the given image
     :param image: The path of the image you want to find
@@ -18,8 +17,8 @@ def is_on_screen(image, confidence=0.6) -> bool | None:
     except pyautogui.ImageNotFoundException:
         return False  # Returns false (It didn't find)
 
-
-def find_on_screen(image, confidence=0.7) -> None:
+# At the moment unused
+def find_on_screen(image: str, confidence: float=0.7) -> None:
     """
     Based on is_on_screen() function. It loops until it finds the desired image
     :param image: "The path of the image you want to find"
@@ -34,7 +33,7 @@ def find_on_screen(image, confidence=0.7) -> None:
             break
 
 
-def find_and_click(image, confidence=0.7, times=1) -> bool:
+def find_and_click(image: str, confidence: float=0.7, times: int=1) -> bool:
     """
     Finds an image and clicks in the middle of it.
     :param image: "The path of the image you want to find"
@@ -43,7 +42,7 @@ def find_and_click(image, confidence=0.7, times=1) -> bool:
     :return: A bool
     """
     tries = 0
-    while tries < 20:
+    while tries < 20:  # Added a timeout so it doesn't get stuck some stage
         try:
             x, y = pyautogui.locateCenterOnScreen(image, confidence=confidence)
             for i in range(times):
@@ -57,7 +56,7 @@ def find_and_click(image, confidence=0.7, times=1) -> bool:
     return False
 
 
-def clear_and_type(name) -> None:
+def clear_and_type(name: str) -> None:
     """
     Clears a text box and types new text.
     :param name: Text to type.
@@ -85,17 +84,17 @@ def parse_arguments() -> argparse.Namespace:
     return parser.parse_args()
 
 
-def measure_time(func) -> Callable[[tuple[Any, ...], dict[str, Any]], None]:
+def measure_time(func):
     """
     Decorator to measure a function's execution time.
     :param func: Function to measure.
     """
     def wrapper(*args, **kwargs) -> None:
         start = time.time()
-        func(*args, **kwargs)
+        result = func(*args, **kwargs)
         end = time.time()
         print(
             f"Time it took to execute {str(func).split(' ')[1]}: {(end - start):.2f} seconds"
         )
-
+        return result
     return wrapper
