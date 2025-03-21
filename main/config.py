@@ -1,4 +1,4 @@
-import logging
+import logging  # Used to log each action of the program
 
 # ROOM_CONFIG
 DESCRIPTION: str = "Bafoon"  # The room description
@@ -10,7 +10,7 @@ SHAKESPEARE_POEM: str = (
 
 
 # Saved Images
-IMAGE_PATHS = {
+IMAGE_PATHS: dict[str, str] = {
     'main'        : 'images/main_menu'                  + '.png',
     'create'      : 'images/create_menu'                + '.png',
     'close'       : 'images/close_button'               + '.png',
