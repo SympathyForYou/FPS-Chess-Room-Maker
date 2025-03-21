@@ -1,7 +1,6 @@
 from config import IMAGE_PATHS, DESCRIPTION, NORMAL_ROOM_NAME, SHINY_ROOM_NAME  # Config
 import pyautogui  # Used for mouse / keyboard inputs
 import logging  # Used to log print messages
-import time  # Used to make the program wait
 from functions import (
     is_on_screen,
     find_and_click,
@@ -11,22 +10,23 @@ from functions import (
 )
 
 
-def find_host_button() -> None:
+def find_host_button(shiny_mode: bool) -> None:
     """
     Clicks on the host button that leads to the create room menu.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Click on the Host Button
     if find_and_click(IMAGE_PATHS["host"]):
         logging.info("Clicked Host Button")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
-def set_room_name(shiny_mode) -> None:
+def set_room_name(shiny_mode: bool) -> None:
     """
     Sets room's name based on the shiny flag.
-    :param shiny_mode: See get_shiny_mode_from_input function.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Set room name
@@ -35,25 +35,26 @@ def set_room_name(shiny_mode) -> None:
         clear_and_type(room_name)
         logging.info(f"Set room name to: {room_name}")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
-def set_description() -> None:
+def set_description(shiny_mode: bool) -> None:
     """
     Sets room's description.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     if find_and_click(IMAGE_PATHS["description"]):
         clear_and_type(DESCRIPTION)
         logging.info(f"Set description to: {DESCRIPTION}")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
-def set_game_mode(shiny_mode) -> None:
+def set_game_mode(shiny_mode: bool) -> None:
     """
     Clicks on the shiny game-mode checkbox.
-    :param shiny_mode: See get_shiny_mode_from_input function.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Set game-mode
@@ -61,37 +62,39 @@ def set_game_mode(shiny_mode) -> None:
         if find_and_click(IMAGE_PATHS["shiny"], confidence=0.95):
             logging.info("Activated Shiny Game Mode")
         else:
-            main()
+            create_lobby(shiny_mode)
 
 
-def create_room() -> None:
+def create_room(shiny_mode: bool) -> None:
     """
     Clicks on the launch room button.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Creates a room
     if find_and_click(IMAGE_PATHS["create_room"]):
         logging.info("Lobby Launched")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
-def close_invites() -> None:
+def close_invites(shiny_mode: bool) -> None:
     """
     Closes the friends invite window.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Close invites
     if find_and_click(IMAGE_PATHS["close"]):
         logging.info("Closed invites window")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
-def game_ended(shiny_mode) -> None:
+def game_ended(shiny_mode: bool) -> None:
     """
     Whenever someone wins / player leaves it quits to main menu.
-    :param shiny_mode: See get_shiny_mode_from_input function.
+    :param shiny_mode: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     :return: None
     """
     # Set description
@@ -100,7 +103,7 @@ def game_ended(shiny_mode) -> None:
         create_lobby(shiny_mode)
         logging.info("Restart game.")
     else:
-        main()
+        create_lobby(shiny_mode)
 
 
 def define_stage() -> int:
@@ -115,7 +118,7 @@ def define_stage() -> int:
             return 1
         elif is_on_screen(IMAGE_PATHS["description"]):
             return 2
-        elif is_on_screen(IMAGE_PATHS["shiny"], 0.95):
+        elif is_on_screen(IMAGE_PATHS["shiny"], confidence=0.95):
             return 3
         elif is_on_screen(IMAGE_PATHS["create_room"]):
             return 4
@@ -156,19 +159,13 @@ def create_lobby(shiny_mode: bool) -> None:
         create_room,
         close_invites,
     ]
-    current_stage = define_stage()
 
+    current_stage = define_stage()
     # print(current_stage) -- Debug
     # Looping sequence
     if current_stage < 7:
         for func in functions[current_stage:]:
             # print(functions[current_stage].__name__) -- Debug
-            func_name = func.__name__
-
-            if func_name not in ["set_room_name", "set_game_mode", "game_ended"]:
-                time.sleep(0.2)
-                func()
-            else:
                 func(shiny_mode)
     # If host left or failure
     elif current_stage == 8:
