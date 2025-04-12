@@ -1,5 +1,5 @@
+from os import path  # Used to find images folder regardless of where the script is run from
 import logging  # Used to log each action of the program
-
 # ROOM_CONFIG
 DESCRIPTION: str = "Bafoon"  # The room description
 SHINY_ROOM_NAME: str = "Shiny Pokemon!"  # Room name for shiny game
@@ -8,27 +8,28 @@ SHAKESPEARE_POEM: str = (
     """O, fairest of days, how dost thou shine so bright? ... (truncated for brevity)"""  # An o'l good poem
 )
 
+# Gets the absolute path of the images 
+absolute_images_path = str(path.abspath(path.join(path.dirname(__file__), path.pardir, 'images')))
 
 # Saved Images
 IMAGE_PATHS: dict[str, str] = {
-    'main'        : 'images/main_menu'                  + '.png',
-    'create'      : 'images/create_menu'                + '.png',
-    'close'       : 'images/close_button'               + '.png',
-    'waiting'     : 'images/waiting_for_player'         + '.png',
-    'left'        : 'images/player_left'                + '.png',
-    'menu'        : 'images/main_menu_button'           + '.png',
-    'host'        : 'images/host'                       + '.png',
-    'room_name'   : 'images/room_name'                  + '.png',
-    'description' : 'images/description'                + '.png',
-    'shiny'       : 'images/shiny'                      + '.png',
-    'create_room' : 'images/create_room_button'         + '.png',
-    'white'       : 'images/white_wins'                 + '.png',
-    'black'       : 'images/black_wins'                 + '.png',
-    'invite'      : 'images/invite_button'              + '.png',
-    'host_left'   : 'images/host_left'                  + '.png',
-    'failure'     : 'images/pending_connection_failure' + '.png'
+    'main'        : absolute_images_path + '/' + 'main_menu'          + '.png',
+    'create'      : absolute_images_path + '/' + 'create_menu'        + '.png',
+    'close'       : absolute_images_path + '/' + 'close_button'       + '.png',
+    'waiting'     : absolute_images_path + '/' + 'waiting_for_player' + '.png',
+    'left'        : absolute_images_path + '/' + 'player_left'        + '.png',
+    'menu'        : absolute_images_path + '/' + 'main_menu_button'   + '.png',
+    'host'        : absolute_images_path + '/' + 'host'               + '.png',
+    'room_name'   : absolute_images_path + '/' + 'room_name'          + '.png',
+    'description' : absolute_images_path + '/' + 'description'        + '.png',
+    'shiny'       : absolute_images_path + '/' + 'shiny'              + '.png',
+    'create_room' : absolute_images_path + '/' + 'create_room_button' + '.png',
+    'white'       : absolute_images_path + '/' + 'white_wins'         + '.png',
+    'black'       : absolute_images_path + '/' + 'black_wins'         + '.png',
+    'invite'      : absolute_images_path + '/' + 'invite_button'      + '.png',
+    'host_left'   : absolute_images_path + '/' + 'host_left'          + '.png',
+    'failure'     : absolute_images_path + '/' + 'connection_failure' + '.png'
 }
-
 
 # Basic Config Setup
 logging.basicConfig(
