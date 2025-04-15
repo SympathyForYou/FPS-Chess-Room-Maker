@@ -5,7 +5,7 @@ import time       # (Built-in) Used for the measure_time decorator
 import sys        # (Built-in) Used to add --yes / --no cmd arguments
 
 
-class ImageRecognition:
+class ImageRecognition:  # This is more of a folder than a class
     """
     This class contains functions related to finding images on the screen.
     """
@@ -49,7 +49,7 @@ class ImageRecognition:
         return False
 
 
-class Backend:
+class Backend:  # This is more of a folder than a class
     """
     Miscellaneous functions related to:
     - parsing arguments, 
@@ -114,7 +114,7 @@ class Backend:
         pyautogui.typewrite(sentence)
 
 
-class Stage:
+class Stage:  # This is more of a folder than a class
     """
     This class contains all stage functions the program must run to create a chess room.
     """

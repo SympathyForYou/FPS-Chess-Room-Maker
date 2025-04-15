@@ -1,6 +1,5 @@
 from config import IMAGE_PATHS
-import pyautogui  # (Third-Party) Used for automation (clicking, typing)
-import logging    # (Built-in) Used to print classy messages
+import logging  # (Built-in) Used to print classy messages
 from functions import (
     ImageRecognition,
     Backend,
@@ -48,8 +47,11 @@ def create_lobby(game_mode_flag: bool) -> None:
     :return: None
     """
     WIN_LOSS_SCENARIO: int = 6
+     
+    logging.info("Detecting stage...")
+    current_stage: int = detect_stage() # Get current stage
 
-    functions = [
+    functions: list = [
         Stage.find_host_button,
         Stage.set_room_name,
         Stage.set_description,
@@ -58,11 +60,6 @@ def create_lobby(game_mode_flag: bool) -> None:
         Stage.close_invites,
         ]
 
-    # Get current stage
-    import time
-    start: float = time.time()
-    logging.info("Detecting stage...")
-    current_stage = detect_stage()
     logging.info("Creating lobby...")
     # Looping through stages
     if current_stage < WIN_LOSS_SCENARIO:
@@ -78,6 +75,7 @@ def main() -> None:
     logging.info("Macro ON")
     while True:  # This program doesn't have a concrete way to stop
         create_lobby(Backend.user_input())
+
 
 if __name__ == "__main__":
     main()
