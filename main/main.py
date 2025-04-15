@@ -73,8 +73,9 @@ def create_lobby(game_mode_flag: bool) -> None:
 
 def main() -> None:
     logging.info("Macro ON")
+    USER_INPUT: str = Backend.user_input()  # So the program won't ask for another input when looping once
     while True:  # This program doesn't have a concrete way to stop
-        create_lobby(Backend.user_input())
+        create_lobby(USER_INPUT)
 
 
 if __name__ == "__main__":

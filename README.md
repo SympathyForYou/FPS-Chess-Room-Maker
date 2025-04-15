@@ -1,14 +1,15 @@
-# Chess Macro
+# FPS Chess Macro
 
-![Chess Icon](fps_chess.ico)
+![fps_chess](https://github.com/user-attachments/assets/fed8462f-7f7b-402b-9ac5-954d9c245de5)
 
-A Python macro to automate room creation in FPS Chess.
+## Overview
+This macro takes control of your mouse and keyboard to automate the process of room creating insde FPS Chess.
+
+Based on [PyAutoGUI](https://pyautogui.readthedocs.io/en/latest/) Library and [Open-CV](https://opencv.org).
 
 ## Table of Contents
 
-- [Overview](#overview)
 - [Features](#features)
-- [Requirements](#requirements)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Options](#options)
@@ -17,24 +18,13 @@ A Python macro to automate room creation in FPS Chess.
 - [Contributing](#contributing)
 - [License](#license)
 
-## Overview
-
-This macro automates the process of creating rooms in FPS Chess. It navigates through the menu,
-sets up a room with a custom name and description, and can optionally activate shiny game-mode.
-This script expects a resolution of 1920 by 1080.
 
 ## Features
 
 - Automatic room creation
 - Custom room name and description
-- Optional shiny mode activation
-- Automatic leave after enemy player leaves
-
-## Requirements
-
-- Python 3.x
-- FPS Chess game installed
-- Libraries inside of [requirements](requirements.txt)
+- Sleek game mode selection
+- Automatic leave on game end
 
 ## Installation
 
@@ -48,20 +38,16 @@ This script expects a resolution of 1920 by 1080.
    ```
 
 ## Usage
-
-1. Ensure FPS Chess is running and on the main menu.
-2. Open a terminal in the project directory.
-3. Run the script:
-   ```
-   python main.py
-   ```
-4. Follow the on-screen prompts or use command-line arguments.
+Run the script:
+```
+python main.py
+```
 
 ## Options
 
 - Interactive mode: `python main.py`
-- Enable shiny mode: `python main.py -y`
-- Disable shiny mode: `python main.py -n`
+- Enable shiny game mode: `python main.py -y`
+- Disable shiny game mode: `python main.py -n`
 
 ## Troubleshooting
 
@@ -70,7 +56,7 @@ This script expects a resolution of 1920 by 1080.
 
 ## How to Change Description & Room Name
 
-1. Open [config.py](main/config.py) found in the root directory using an IDE or text editor.
+1. Open [config.py](main/config.py) found in main using a text editor.
 2. Make changes.
 3. Save Changes.
 
@@ -80,4 +66,4 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License -- See the [LICENSE](LICENSE) file for details.
