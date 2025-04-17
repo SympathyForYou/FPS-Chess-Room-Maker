@@ -5,6 +5,7 @@ import pyautogui          # (Third-Party) Used for automation (clicking, typing)
 
 
 class RoomSetup:  # An actual class
+    """This class holds the main logic of the program"""
     @staticmethod
     def _detect_stage() -> None:
         from main import detect_stage
@@ -22,7 +23,6 @@ class RoomSetup:  # An actual class
     @staticmethod
     def find_host_button(img_path, game_mode_flag: bool) -> None:
         """ Clicks on the host button in main menu that leads to the create room menu."""
-
         RoomSetup._click_and_log(img_path, log_message="Clicked Host Button")
 
 
