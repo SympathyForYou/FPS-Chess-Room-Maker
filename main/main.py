@@ -38,52 +38,50 @@ def detect_stage() -> int:
             info("Connection Failed")
             return 7
 
+
 # The main flow of the program is here
 @Backend.measure_time
-def create_lobby(game_mode_flag: bool) -> None:
+def main() -> None:
     """
     Creates a lobby by looping through a few functions -- Based on game_mode_flag and define_stage function.
     :param game_mode_flag: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     """
-    WIN_LOSS_SCENARIO: int = 6
-     
-    info("Detecting stage...")
-    current_stage: int = detect_stage() # Get current stage
-
-    FUNCTIONS: tuple = (
-        RoomSetup.find_host_button,
-        RoomSetup.set_room_name,
-        RoomSetup.set_description,
-        RoomSetup.set_game_mode,
-        RoomSetup.create_room,
-        RoomSetup.close_invites,
-    )
-    
-    IMAGES: tuple = (
-        IMAGE_PATHS["host_text_in_main_menu"],
-        IMAGE_PATHS["room_name_text_box"],
-        IMAGE_PATHS["description_text_box"],
-        IMAGE_PATHS["shiny_game_mode_checkbox"],
-        IMAGE_PATHS["create_room_button"],
-        IMAGE_PATHS["close_invites_button"],
-    )
-
-    info("Creating lobby...")
-    # Looping through room creating stages
-    if current_stage < WIN_LOSS_SCENARIO:
-        for func, image in zip(FUNCTIONS[current_stage:], IMAGES[current_stage:]):
-            func(image, game_mode_flag) 
-
-    # Game Over
-    else:
-        RoomSetup.game_ended(IMAGE_PATHS["return_to_main_menu_button"], game_mode_flag)
-
-
-def main() -> None:
     info("Macro ON")
-    USER_INPUT: str = Backend.user_input()  # So the program won't ask for another input when looping once
+    
+    USER_INPUT: str = Backend.user_input()
+    WIN_LOSS_SCENARIO: int = 6
+
     while True:  # This program doesn't have a concrete way to stop
-        create_lobby(USER_INPUT)
+        info("Detecting stage...")
+        current_stage: int = detect_stage() # Get current stage
+
+        FUNCTIONS: tuple = (
+            RoomSetup.find_host_button,
+            RoomSetup.set_room_name,
+            RoomSetup.set_description,
+            RoomSetup.set_game_mode,
+            RoomSetup.create_room,
+            RoomSetup.close_invites,
+        )
+        
+        IMAGES: tuple = (
+            IMAGE_PATHS["host_text_in_main_menu"],
+            IMAGE_PATHS["room_name_text_box"],
+            IMAGE_PATHS["description_text_box"],
+            IMAGE_PATHS["shiny_game_mode_checkbox"],
+            IMAGE_PATHS["create_room_button"],
+            IMAGE_PATHS["close_invites_button"],
+        )
+
+        info("Creating lobby...")
+        # Looping through room creating stages
+        if current_stage < WIN_LOSS_SCENARIO:
+            for func, image in zip(FUNCTIONS[current_stage:], IMAGES[current_stage:]):
+                func(image, USER_INPUT) 
+
+        # Game Over
+        else:
+            RoomSetup.game_ended(IMAGE_PATHS["return_to_main_menu_button"], USER_INPUT)
 
 
 if __name__ == "__main__":

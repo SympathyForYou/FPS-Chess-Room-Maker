@@ -4,6 +4,75 @@ from sys import argv      # (Built-in) Used to add --yes / --no cmd arguments
 import pyautogui          # (Third-Party) Used for automation (clicking, typing)
 
 
+class RoomSetup:  # An actual class
+    @staticmethod
+    def _detect_stage() -> None:
+        from main import detect_stage
+        detect_stage()
+
+
+    @staticmethod
+    def _click_and_log(img_path: str, log_message: str, confidence: float=0.7, clicks: int=1) -> None:
+        if ImageRecognition.find_and_click(img_path, confidence=confidence, clicks=clicks):
+            info(log_message)
+
+        RoomSetup._detect_stage()
+    
+
+    @staticmethod
+    def find_host_button(img_path, game_mode_flag: bool) -> None:
+        """ Clicks on the host button in main menu that leads to the create room menu."""
+
+        RoomSetup._click_and_log(img_path, log_message="Clicked Host Button")
+
+
+    @staticmethod
+    def set_room_name(img_path, game_mode_flag: bool) -> None:
+        """Sets room's name based on the game_mode."""
+        from config import NORMAL_ROOM_NAME, SHINY_ROOM_NAME
+        ROOM_NAME = SHINY_ROOM_NAME if game_mode_flag else NORMAL_ROOM_NAME
+        if ImageRecognition.find_and_click(img_path):
+            info(f"Set room namet to: {ROOM_NAME}")
+            Backend.clear_and_type(ROOM_NAME)
+
+
+    @staticmethod
+    def set_description(img_path: str, game_mode_flag: bool) -> None:
+        """Sets room's description."""
+        from config import DESCRIPTION
+        if ImageRecognition.find_and_click(img_path):
+            info(f"Set description to: {DESCRIPTION}")
+            Backend.clear_and_type(DESCRIPTION)
+    
+
+    @staticmethod
+    def set_game_mode(img_path: str, game_mode_flag: bool) -> None:
+        """Clicks on the shiny game-mode checkbox."""
+        if game_mode_flag:
+            RoomSetup._click_and_log(img_path, log_message="Activated Shiny Game Mode", confidence=0.95,)
+        
+        RoomSetup._detect_stage()
+
+
+    @staticmethod
+    def create_room(img_path: str, game_mode_flag: bool) -> None:
+        """Clicks on the launch room button."""
+        RoomSetup._click_and_log(img_path, log_message="Lobby Launched")
+
+
+    @staticmethod
+    def close_invites(img_path: str, game_mode_flag: bool) -> None:
+        """Clicks on the close friends invite window."""
+        RoomSetup._click_and_log(img_path, log_message="Closed invites window")
+    
+
+    @staticmethod
+    def game_ended(img_path: str, game_mode_flag: bool) -> None:
+        """Whenever someone wins / player leaves it quits to main menu."""
+        pyautogui.hotkey("esc")
+        RoomSetup._click_and_log(img_path, log_message="Restart game.", clicks=2)
+
+
 class ImageRecognition:  # This is more of a folder than a class
         """
         This class contains functions related to finding images on the screen.
@@ -109,72 +178,3 @@ class Backend:  # This is more of a folder than a class
         pyautogui.press("backspace")
         # Type new text
         pyautogui.typewrite(sentence)
-
-
-class RoomSetup:  # An actual class
-    @staticmethod
-    def _detect_stage() -> None:
-        from main import detect_stage
-        detect_stage()
-
-
-    @staticmethod
-    def _click_and_log(img_path: str, log_message: str, confidence: float=0.7, clicks: int=1) -> None:
-        if ImageRecognition.find_and_click(img_path, confidence=confidence, clicks=clicks):
-            info(log_message)
-
-        RoomSetup._detect_stage()
-    
-
-    @staticmethod
-    def find_host_button(img_path, game_mode_flag: bool) -> None:
-        """ Clicks on the host button in main menu that leads to the create room menu."""
-
-        RoomSetup._click_and_log(img_path, log_message="Clicked Host Button")
-
-
-    @staticmethod
-    def set_room_name(img_path, game_mode_flag: bool) -> None:
-        """Sets room's name based on the game_mode."""
-        from main import NORMAL_ROOM_NAME, SHINY_ROOM_NAME
-        ROOM_NAME = SHINY_ROOM_NAME if game_mode_flag else NORMAL_ROOM_NAME
-        if ImageRecognition.find_and_click(img_path):
-            info(f"Set room namet to: {ROOM_NAME}")
-            Backend.clear_and_type(ROOM_NAME)
-
-
-    @staticmethod
-    def set_description(img_path: str, game_mode_flag: bool) -> None:
-        """Sets room's description."""
-        from main import DESCRIPTION
-        if ImageRecognition.find_and_click(img_path):
-            info("Set description to: {DESCRIPTION}")
-            Backend.clear_and_type(DESCRIPTION)
-    
-
-    @staticmethod
-    def set_game_mode(img_path: str, game_mode_flag: bool) -> None:
-        """Clicks on the shiny game-mode checkbox."""
-        if game_mode_flag:
-            RoomSetup._click_and_log(img_path, log_message="Activated Shiny Game Mode", confidence=0.95,)
-        
-        RoomSetup._detect_stage()
-
-
-    @staticmethod
-    def create_room(img_path: str, game_mode_flag: bool) -> None:
-        """Clicks on the launch room button."""
-        RoomSetup._click_and_log(img_path, log_message="Lobby Launched")
-
-
-    @staticmethod
-    def close_invites(img_path: str, game_mode_flag: bool) -> None:
-        """Clicks on the close friends invite window."""
-        RoomSetup._click_and_log(img_path, log_message="Closed invites window")
-    
-
-    @staticmethod
-    def game_ended(img_path: str, game_mode_flag: bool) -> None:
-        """Whenever someone wins / player leaves it quits to main menu."""
-        pyautogui.hotkey("esc")
-        RoomSetup._click_and_log(img_path, log_message="Restart game.", clicks=2)
