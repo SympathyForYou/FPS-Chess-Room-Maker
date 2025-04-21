@@ -44,7 +44,6 @@ def detect_stage() -> int:
 def main() -> None:
     """
     Creates a lobby by looping through a few functions -- Based on game_mode_flag and define_stage function.
-    :param game_mode_flag: If True, sets up a shiny chess game. Otherwise, sets up a normal game.
     """
     info("Macro ON")
     
@@ -77,11 +76,11 @@ def main() -> None:
         # Looping through room creating stages
         if current_stage < WIN_LOSS_SCENARIO:
             for func, image in zip(FUNCTIONS[current_stage:], IMAGES[current_stage:]):
-                func(image, USER_INPUT) 
+                func(img_path=image, game_mode_flag=USER_INPUT) 
 
         # Game Over
         else:
-            RoomSetup.game_ended(IMAGE_PATHS["return_to_main_menu_button"], USER_INPUT)
+            RoomSetup.game_ended(IMAGE_PATHS["return_to_main_menu_button"], game_mode_flag=USER_INPUT)
 
 
 if __name__ == "__main__":
